@@ -1,48 +1,76 @@
-//函式型元件
-// import React, { useState } from 'react'
+import React, { useState } from 'react'
+import './App.css'
+import OrderList from './components/OrderList'
+import Summary from './components/Summary'
 
-// function App() {
-//   // 一組狀態
-//   // useState(0)
-//   // =>[獲得狀態(變數),設定狀態(函數)]
-//   // 解構賦值(ES6)
-//   const [total, setTotal] = useState(9)
-//   return (
-//     <>
-//       <h1
-//         onClick={() => {
-//           setTotal(total + 1)
-//         }}
-//       >
-//         {total}
-//       </h1>
-//     </>
-//   )
-// }
+// 產品訂購的項目
+const products = [
+  {
+    name: '咖啡色 T-shirt',
+    catgory: 'Shirt',
+    image: 'https://i.imgur.com/1GrakTl.jpg',
+    price: 300,
+  },
+  {
+    name: '白色 T-shirt',
+    catgory: 'Shirt',
+    image: 'https://i.imgur.com/ba3tvGm.jpg',
+    price: 200,
+  },
+  {
+    name: '黑色 T-shirt',
+    catgory: 'Shirt',
+    image: 'https://i.imgur.com/pHQ3xT3.jpg',
+    price: 450,
+  },
+  {
+    name: '金色 T-shirt',
+    catgory: 'Shirt',
+    image: 'https://i.imgur.com/pHQ3xT3.jpg',
+    price: 1200,
+  },
+  {
+    name: '金色 T-shirt',
+    catgory: 'Shirt',
+    image: 'https://i.imgur.com/pHQ3xT3.jpg',
+    price: 1200,
+  },
+]
 
-// export default App
+function App() {
+  // 動態的對於產品數量的設定
+  // counts 初始化 [1,1,1,1,1]
+  const [counts, setCounts] = useState(Array(products.length).fill(1))
 
-//類別型元件
-import React from 'react'
-class App extends React.Component {
-  constructor() {
-    super()
-    this.state = {
-      total: 9,
+  // 計算總價用
+  const total = () => {
+    let sum = 0
+    for (let i = 0; i < products.length; i++) {
+      sum += products[i].price * counts[i]
     }
+
+    return sum.toLocaleString()
   }
-  render() {
-    return (
-      <>
-        <h1
-          onClick={() => {
-            this.setState({ total: this.state.total + 1 })
-          }}
-        >
-          {this.state.total}
-        </h1>
-      </>
-    )
+
+  // 計算總共買了多少產品
+  const productCount = () => {
+    let totalCount = 0
+    for (let i = 0; i < counts.length; i++) {
+      totalCount += counts[i]
+    }
+    return totalCount
   }
+
+  return (
+    <div className="card">
+      <div className="row">
+        {/* 產品列表區堆 */}
+        <OrderList products={products} counts={counts} setCounts={setCounts} />
+        {/* 產品摘要區塊 */}
+        <Summary total={total()} productCount={productCount()} />
+      </div>
+    </div>
+  )
 }
+
 export default App
