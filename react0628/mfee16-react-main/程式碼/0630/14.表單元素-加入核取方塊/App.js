@@ -101,7 +101,6 @@ function App() {
           onChange={handleFieldChange}
           required
         />
-        {/* 錯誤訊息 */}
         {fieldErrors.username !== '' && (
           <small className="text-danger form-text">
             {fieldErrors.username}

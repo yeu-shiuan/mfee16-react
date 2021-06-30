@@ -6,7 +6,6 @@ function App() {
     username: '',
     email: '',
     password: '',
-    agree: false,
   })
 
   // 每個欄位的錯誤訊息
@@ -14,21 +13,15 @@ function App() {
     username: '',
     email: '',
     password: '',
-    agree: '',
   })
 
   // 處理每個欄位的變動
   const handleFieldChange = (e) => {
-    console.log(e.target.name, e.target.value, e.target.type, e.target.checked)
-
-    const updateValue =
-      e.target.type === 'checkbox' ? e.target.checked : e.target.value
-
     // 更新輸入欄位的變動
     // 用新輸入的屬性值和原物件作合併
     const updatedFields = {
       ...fields,
-      [e.target.name]: updateValue,
+      [e.target.name]: e.target.value,
     }
 
     setFields(updatedFields)
@@ -101,7 +94,6 @@ function App() {
           onChange={handleFieldChange}
           required
         />
-        {/* 錯誤訊息 */}
         {fieldErrors.username !== '' && (
           <small className="text-danger form-text">
             {fieldErrors.username}
@@ -133,18 +125,6 @@ function App() {
           <small className="text-danger form-text">
             {fieldErrors.password}
           </small>
-        )}
-        <br />
-        <input
-          name="agree"
-          type="checkbox"
-          value={fields.agree}
-          onChange={handleFieldChange}
-          required
-        />
-        我同意會員規定
-        {fieldErrors.agree !== '' && (
-          <small className="text-danger form-text">{fieldErrors.agree}</small>
         )}
         <br />
         <button type="submit">提交</button>

@@ -29,11 +29,17 @@ const products = [
     image: 'https://i.imgur.com/pHQ3xT3.jpg',
     price: 1200,
   },
+  {
+    name: '金色 T-shirt',
+    catgory: 'Shirt',
+    image: 'https://i.imgur.com/pHQ3xT3.jpg',
+    price: 1200,
+  },
 ]
 
 function App() {
   // 動態的對於產品數量的設定
-  // counts 初始化 [1,1,1,1]
+  // counts 初始化 [1,1,1,1,1]
   const [counts, setCounts] = useState(Array(products.length).fill(1))
 
   // 計算總價用
