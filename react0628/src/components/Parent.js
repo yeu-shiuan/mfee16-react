@@ -1,41 +1,46 @@
-//Props父母傳給子女
-// import React, { useState } from 'react'
-// import ChildA from './ChildA'
-// import ChildB from './ChildB'
-
-// function Parent() {
-//   const [data, setData] = useState('parent data')
-
-//   return (
-//     <>
-//       <ChildA data={data} />
-//       <ChildB />
-//     </>
-//   )
-// }
-
-// export default Parent
-
-//Props子女傳給父母
-import React, { useState } from 'react'
-import ChildA from './ChildA'
-import ChildB from './ChildB'
+import React, { useEffect, useState } from 'react'
+import Child from './Child'
 
 function Parent() {
-  const [parentData, setParentData] = useState('Parent Data')
-  const [isChildAAlive, setIsChildAAlive] = useState(true)
+  const [isChildAlive, setIsChildAlive] = useState(true)
+
+  // 以使用者觸發事件的角度來模擬componentDidUpdate
+  const [start, setStart] = useState(false)
+
+  // 模擬componentDidMount
+  useEffect(() => {
+    //程式碼寫在這
+    console.log('Parent componentDidMount')
+    //setDidMount(true)
+  }, [])
+
+  // 模擬componentDidUpdate + componentDidMount
+  useEffect(() => {
+    //程式碼寫在這
+    console.log('Parent componentDidUpdate+componentDidMount', isChildAlive)
+  }, [isChildAlive])
+
+  // 完全模擬componentDidUpdate
+  // 注意如果用didMount狀態不能加入相依性陣列中
+  useEffect(() => {
+    //程式碼寫在這
+    if (start) {
+      console.log('Parent componentDidUpdate', isChildAlive)
+    }
+  }, [isChildAlive, start])
 
   return (
     <>
       <button
         onClick={() => {
-          setIsChildAAlive(!isChildAAlive)
+          setIsChildAlive(!isChildAlive)
+          setStart(true)
         }}
       >
-        {isChildAAlive ? 'ChildA再見' : 'ChildA活回來'}
+        {isChildAlive ? '再見！' : '復活吧！'}
       </button>
-      {isChildAAlive && <ChildA parentData={parentData} />}
-      {/* <ChildB setParentData={setParentData} /> */}
+      <hr />
+      {isChildAlive && <Child />}
     </>
   )
 }
