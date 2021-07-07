@@ -22,11 +22,11 @@ function App() {
         <Link to="/about">About</Link>
         <Link to="/login">Login</Link>
         <Link to="/product">Product</Link>
-        {/* <h3>用a連結</h3>
+        <h3>用a連結</h3>
         <a href="/">Home</a>
         <a href="/about">About</a>
         <a href="/login">Login</a>
-        <a href="/product">Product</a> */}
+        <a href="/product">Product</a>
 
         {/* 以下是路由表 */}
         <Switch>

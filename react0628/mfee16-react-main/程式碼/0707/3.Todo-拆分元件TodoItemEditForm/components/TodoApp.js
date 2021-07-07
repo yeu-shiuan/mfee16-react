@@ -10,21 +10,29 @@ function TodoApp(props) {
     { id: 2, text: '學React', completed: false, edited: false },
   ])
 
-  const handleAddNew = (text) => {
-    // 1. 建立一個新的todo物件
-    const newTodoItem = {
-      id: +new Date(),
-      text: text,
-      completed: false,
-      edited: false,
-    }
+  // 輸入新的todo用
+  const [todoInput, setTodoInput] = useState('')
 
-    // 1. 建立一個新的陣列，把文字輸入框的文字加到todos陣列中
-    const newTodos = [newTodoItem, ...todos]
-    // 2. 設定回todos陣列
-    setTodos(newTodos)
-    // 3. 清空原本的文字輸入框
-    //setTodoInput('')
+  // 每個項目編輯用
+  const [text, setText] = useState('')
+
+  const handleAddNew = (event) => {
+    if (event.key === 'Enter') {
+      // 1. 建立一個新的todo物件
+      const newTodoItem = {
+        id: +new Date(),
+        text: event.target.value,
+        completed: false,
+        edited: false,
+      }
+
+      // 1. 建立一個新的陣列，把文字輸入框的文字加到todos陣列中
+      const newTodos = [newTodoItem, ...todos]
+      // 2. 設定回todos陣列
+      setTodos(newTodos)
+      // 3. 清空原本的文字輸入框
+      setTodoInput('')
+    }
   }
 
   const handleCompleted = (id) => {
@@ -112,13 +120,19 @@ function TodoApp(props) {
   return (
     <>
       <h1>待辨事項</h1>
-      <TodoAddForm handleAddNew={handleAddNew} />
+      <TodoAddForm
+        todoInput={todoInput}
+        setTodoInput={setTodoInput}
+        handleAddNew={handleAddNew}
+      />
       <ul>
         {todos.map((todo, i) => {
           return todo.edited ? (
             <TodoItemEditForm
               key={todo.id}
               todo={todo}
+              text={text}
+              setText={setText}
               handleEditedSave={handleEditedSave}
             />
           ) : (
@@ -127,8 +141,10 @@ function TodoApp(props) {
               todo={todo}
               handleCompleted={handleCompleted}
               handleEdited={handleEdited}
+              setText={setText}
               handleEditedSave={handleEditedSave}
               handleDelete={handleDelete}
+              text={text}
             />
           )
         })}

@@ -1,5 +1,5 @@
 {
-  "name": "react0628",
+  "name": "react-0628",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -14,6 +14,7 @@
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "jquery": "^3.6.0",
+    "node-sass": "4.14.1",
     "prettier": "^2.3.2",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
@@ -22,7 +23,6 @@
     "react-icons": "^4.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
-    "sass": "^1.35.1",
     "web-vitals": "^1.0.1"
   },
   "scripts": {

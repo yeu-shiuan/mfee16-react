@@ -36,7 +36,10 @@ function App() {
           <Route path="/product/baby">
             <ProductBaby />
           </Route>
-          <Route path="/product">
+          {/* 此處設定網址上的params */}
+          {/* `:id` 取名params的屬性名為id */}
+          {/* `?` 可選的 */}
+          <Route path="/product/:id?">
             <Product auth={auth} />
           </Route>
           <Route path="/login">
