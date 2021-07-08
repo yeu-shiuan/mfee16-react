@@ -1,54 +1,81 @@
+// 使用套件
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import React, { useState } from 'react'
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'
 
-// 以下要導入所需要頁面
+// 頁面用元件
 import Home from './pages/Home'
 import About from './pages/About'
-import Product from './pages/product/Product'
-import ProductBaby from './pages/product/ProductBaby'
-import ProductMen from './pages/product/ProductMen'
 import Login from './pages/Login'
+import ProductBaby from './pages/ProductBaby'
+import ProductMen from './pages/ProductMen'
+import ProductWomen from './pages/ProductWomen'
+import NotFoundPage from './pages/NotFoundPage'
+import ProductCategory from './pages/ProductCategory'
+import Member from './pages/Member'
+import Student from './pages/Student'
 
-// 路由器所在的位置，記錄所有的路由
-// 全域狀態放在這裡
+// 組合用元件
+import MyNavbar from './components/MyNavbar'
+import MyFooter from './components/MyFooter'
+import MainContent from './components/MainContent'
+import ScrollToTop from './components/ScrollToTop'
+//import Breadcrumb from './components/Breadcrumb'
+import MultiLevelBreadcrumb from './components/Breadcrumb'
+
 function App() {
   const [auth, setAuth] = useState(false)
 
   return (
     <Router>
       <>
-        <h3>用Link連結</h3>
-        <Link to="/">Home</Link>
-        <Link to="/about">About</Link>
-        <Link to="/login">Login</Link>
-        <Link to="/product">Product</Link>
-        {/* <h3>用a連結</h3>
-        <a href="/">Home</a>
-        <a href="/about">About</a>
-        <a href="/login">Login</a>
-        <a href="/product">Product</a> */}
-
-        {/* 以下是路由表 */}
-        <Switch>
-          <Route path="/product/men">
-            <ProductMen />
-          </Route>
-          <Route path="/product/baby">
-            <ProductBaby />
-          </Route>
-          <Route path="/product">
-            <Product auth={auth} />
-          </Route>
-          <Route path="/login">
-            <Login setAuth={setAuth} auth={auth} />
-          </Route>
-          <Route path="/about">
-            <About />
-          </Route>
-          <Route exact path="/">
-            <Home auth={auth} />
-          </Route>
-        </Switch>
+        {/* LOGO+標題+導覽列+上方選單 */}
+        <MyNavbar auth={auth} />
+        {/* 主內容區 */}
+        <MainContent>
+          <MultiLevelBreadcrumb />
+          {/* 匹配路由表(路徑單一匹配) */}
+          {/* 切換顯示的元件畫面放在這下面 */}
+          {/* ScrollToTop是為了讓連到另一頁內容時，頁面回到最上方 */}
+          <ScrollToTop>
+            <Switch>
+              <Route path="/student">
+                <Student />
+              </Route>
+              <Route path="/product/women">
+                <ProductWomen />
+              </Route>
+              <Route path="/product/men">
+                <ProductMen />
+              </Route>
+              {/* 這裡要定義網址參數的屬性名稱 */}
+              <Route path="/product/baby/:id?">
+                <ProductBaby />
+              </Route>
+              <Route path="/login">
+                {/* 利用props傳入頁面元件狀態 */}
+                <Login auth={auth} setAuth={setAuth} />
+              </Route>
+              <Route path="/about">
+                <About auth={auth} />
+              </Route>
+              <Route exact path="/">
+                <Home auth={auth} />
+              </Route>
+              <Route path="/productcategory">
+                <ProductCategory />
+              </Route>
+              <Route path="/member">
+                <Member auth={auth} />
+              </Route>
+              <Route path="*">
+                <NotFoundPage />
+              </Route>
+            </Switch>
+            {/* end 匹配路由表 */}
+          </ScrollToTop>
+        </MainContent>
+        {/* 頁尾+版權訊息 */}
+        <MyFooter />
       </>
     </Router>
   )
